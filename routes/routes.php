@@ -20,35 +20,58 @@ if (count(array_filter($arrayRoutes)) == 0) {
    if (count(array_filter($arrayRoutes)) == 1) {
       // cuando se hacen peticiones a regitro
         if (array_filter($arrayRoutes)[1] == "registro") {
-            $json = array(
-                "detalle" => "Estoy en registro"
-            );
 
-            echo json_encode($json, true);
-            return;
+            if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
+               
+                $register = new CustomerController();
+                $register -> create();
+            }
+
         }
 
             //cuando se hacen peticiones a cursos
         if (array_filter($arrayRoutes)[1] == "cursos") {
             
-            $json = array(
-                "detalle" => "Estoy en cursos"
-            );
+            if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "GET") {
+                
+                $courses = new CoursesController();
+                $courses -> index();
+            }
 
-            echo json_encode($json, true);
-            return;
+            if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
+                
+                $createCourse = new CoursesController();
+                $createCourse -> create();
+            }
+           
         }
 
-   } else {
+    } else {
         
         // cuando se hacen peticiones a un solo curso
         if (array_filter($arrayRoutes)[1] == "cursos" && is_numeric(array_filter($arrayRoutes)[2])) {
-            $json = array(
-                "detalle" => "Estoy en un curso"
-            );
 
-            echo json_encode($json, true);
-            return;
+             // peticiones GET
+             if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "GET") {
+                
+                $showCourse = new CoursesController();
+                $showCourse -> show(array_filter($arrayRoutes)[2]);
+            }
+           
+            // peticiones PUT
+            if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "PUT") {
+                
+                $updateCourse = new CoursesController();
+                $updateCourse -> update(array_filter($arrayRoutes)[2]);
+            }
+
+            // peticiones DELETE
+            if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "DELETE") {
+                
+                $deleteCourse = new CoursesController();
+                $deleteCourse -> delete(array_filter($arrayRoutes)[2]);
+            }
+
         }
 
    }

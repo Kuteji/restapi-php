@@ -1,10 +1,10 @@
 <?php
 
 
-class RoutesController {
+class RoutesController{
 
-    public function index(){
-
+    public function index()
+    {
         include "routes/routes.php";
     }
 
