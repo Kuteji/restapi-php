@@ -3,8 +3,11 @@
 class CustomerController{
 
     // Crear un registro
-    public function create()
+    public function create($datos)
     {
+        echo '<pre>' ;print_r($datos); echo '</pre>';
+        return;
+
         $json = array(
             "detalle" => "Registro Almacenado con Exito"
         );
@@ -12,5 +15,4 @@ class CustomerController{
         echo json_encode($json, true);
         return;
     }
-
 }

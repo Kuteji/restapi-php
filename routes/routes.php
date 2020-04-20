@@ -17,14 +17,25 @@ if (count(array_filter($arrayRoutes)) == 0) {
 
 } else {
 
+    // echo '<pre>';print_r($arrayRoutes);echo'</pre>';
+
    if (count(array_filter($arrayRoutes)) == 1) {
       // cuando se hacen peticiones a regitro
         if (array_filter($arrayRoutes)[1] == "registro") {
 
             if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
                
+                // capturar datos
+
+                $datos = array(
+                    "nombe" => $_POST["nombre"],
+                    "apellido" => $_POST["apellido"],
+                    "email" => $_POST["email"]
+                );
+
+
                 $register = new CustomerController();
-                $register -> create();
+                $register -> create($datos);
             }
 
         }
