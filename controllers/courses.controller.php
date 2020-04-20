@@ -5,8 +5,12 @@ class CoursesController{
     // listar cursos
     public function index()
     {
+        $courses = CoursesModel::index("cursos");
+
         $json = array(
-            "detalle" => "Mostrando todos los cursos"
+            "status" => 200,
+            "total_register" => count($courses),
+            "detalle" => $courses
         );
 
         echo json_encode($json, true);
