@@ -10,7 +10,7 @@ class CoursesController{
         $json = array(
             "status" => 200,
             "total_register" => count($courses),
-            "detalle" => $courses
+            "data" => $courses
         );
 
         echo json_encode($json, true);
@@ -21,7 +21,7 @@ class CoursesController{
     public function create()
     {
         $json = array(
-            "detalle" => "Curso Almacenado con Exito"
+            "message" => "Curso Almacenado con Exito"
         );
 
         echo json_encode($json, true);
@@ -32,7 +32,7 @@ class CoursesController{
     public function show($id)
     {
         $json = array(
-            "detalle" => "mostrando el curso con el id: ".$id
+            "message" => "mostrando el curso con el id: ".$id
         );
 
         echo json_encode($json, true);

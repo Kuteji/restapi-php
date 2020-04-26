@@ -28,7 +28,7 @@ if (count(array_filter($arrayRoutes)) == 0) {
                 // capturar datos
 
                 $datos = array(
-                    "nombe" => $_POST["nombre"],
+                    "nombre" => $_POST["nombre"],
                     "apellido" => $_POST["apellido"],
                     "email" => $_POST["email"]
                 );
