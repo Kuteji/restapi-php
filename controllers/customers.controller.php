@@ -77,17 +77,52 @@ class CustomerController{
                     }
                 }
 
+                 /*=====================================
+                    Generar credenciales del cliente
+                =====================================*/
+                $id_cliente = str_replace("$","a",crypt($datos["nombre"].$datos["apellido"].$datos["email"], '$2a$07$usesomesillystringforsalt$') );
+                $llave_secreta = str_replace("$","o",crypt($datos["email"].$datos["apellido"].$datos["nombre"], '$2a$07$usesomesillystringforsalt$') );
+               
 
-            
+                  /*=====================================
+                         Llevar datos al modelo
+                =====================================*/
+
+                    $data = array(
+                        "nombre"=>$datos["nombre"],
+                        "apellido"=>$datos["apellido"],
+                        "email"=>$datos["email"],
+                        "id_cliente"=>$id_cliente,
+                        "llave_secreta"=>$llave_secreta,
+                        "created_at"=>date('Y-m-d h:i:s'),
+                        "updated_at"=>date('Y-m-d h:i:s')
+                                );
+
+                    $create = CustomersModel::create("clientes", $data);          
+
+                    // echo '<pre>';print_r($create); echo '</pre>';
+                    // return;
+
+                  /*=====================================
+                        Respuesta de el modelo
+                =====================================*/
+
+                    if ($create == "ok") {
+
+                        $json = array(
+                            "status"=> 200,
+                            "message"=> "Registro exitoso, asegurese de guardar sus credenciales",
+                            "credentials"=>array("id_cliente"=>$id_cliente, "llave_secreta"=>$llave_secreta)
+                        );
+                
+                        echo json_encode($json, true);
+                        return;
+
+                    }
+                
 
 
-            $json = array(
-                "status"=> 200,
-                "message"=> "Registro almacenado exitosamente"
-            );
-    
-            echo json_encode($json, true);
-            return;
+          
 
         
     }
