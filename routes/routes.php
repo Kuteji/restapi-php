@@ -9,7 +9,7 @@ if (count(array_filter($arrayRoutes)) == 0) {
 
     // cuando no se hace ninguna peticion a la api
     $json = array(
-        "detalle" => "no encontrado"
+        "message" => "no encontrado"
     );
     //convertimos el array en json
     echo json_encode($json, true);
@@ -36,25 +36,65 @@ if (count(array_filter($arrayRoutes)) == 0) {
 
                 $register = new CustomerController();
                 $register -> create($datos);
+            } else {
+
+                // no exste el metodo en la ruta
+                $json = array(
+                    "message" => "no encontrado"
+                );
+                //convertimos el array en json
+                echo json_encode($json, true);
+                return;
             }
 
-        }
-
             //cuando se hacen peticiones a cursos
-        if (array_filter($arrayRoutes)[1] == "cursos") {
+        } else if (array_filter($arrayRoutes)[1] == "cursos") {
             
             if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "GET") {
                 
                 $courses = new CoursesController();
                 $courses -> index();
-            }
 
-            if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
+            } else if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+                /**===============================
+                 *      Obtener los datos
+                 ================================*/
+
+                 $datos = array(
+                    "titulo" => $_POST["titulo"],
+                    "descripcion" => $_POST["descripcion"],
+                    "instructor" => $_POST["instructor"],
+                    "imagen" => $_POST["imagen"],
+                    "precio" => $_POST["precio"]
+                );
+
+                // echo '<pre>';  print_r($datos);  '</pre>';
                 
                 $createCourse = new CoursesController();
-                $createCourse -> create();
+                $createCourse -> create($datos);
+            } else {
+
+                  // no exste el metodo en la ruta
+                  $json = array(
+                    "message" => "no encontrado"
+                    );
+                    //convertimos el array en json
+                    echo json_encode($json, true);
+                    return;
+
             }
            
+        } else {
+
+            // cuando la ruta no existe
+            $json = array(
+                "message" => "no encontrado"
+            );
+            //convertimos el array en json
+            echo json_encode($json, true);
+            return;
         }
 
     } else {
@@ -70,18 +110,37 @@ if (count(array_filter($arrayRoutes)) == 0) {
             }
            
             // peticiones PUT
-            if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "PUT") {
+           else if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "PUT") {
                 
                 $updateCourse = new CoursesController();
                 $updateCourse -> update(array_filter($arrayRoutes)[2]);
             }
 
             // peticiones DELETE
-            if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "DELETE") {
+            else if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "DELETE") {
                 
                 $deleteCourse = new CoursesController();
                 $deleteCourse -> delete(array_filter($arrayRoutes)[2]);
+            } else {
+
+                  // no exste el metodo en la ruta
+                  $json = array(
+                        "message" => "no encontrado"
+                    );
+                    //convertimos el array en json
+                    echo json_encode($json, true);
+                    return;
             }
+
+        } else {
+
+              // no exste el metodo en la ruta
+              $json = array(
+                "message" => "no encontrado"
+                );
+                //convertimos el array en json
+                echo json_encode($json, true);
+                return;
 
         }
 

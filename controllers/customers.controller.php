@@ -111,8 +111,7 @@ class CustomerController{
 
                         $json = array(
                             "status"=> 200,
-                            "message"=> "Registro exitoso, asegurese de guardar sus credenciales",
-                            "credentials"=>array("id_cliente"=>$id_cliente, "llave_secreta"=>$llave_secreta)
+                            "message"=> "Registro exitoso, Su curso ha sido registrado correctamente"
                         );
                 
                         echo json_encode($json, true);
