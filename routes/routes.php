@@ -111,9 +111,23 @@ if (count(array_filter($arrayRoutes)) == 0) {
            
             // peticiones PUT
            else if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"] == "PUT") {
+
+                
+                /* =============================
+                        Capturar datos
+                ================================*/   
+
+                $datos = array();
+                
+                // obtenemos lo que viene por metodo put y lo parseamos para convertir los valores en un array asociativo
+                parse_str(file_get_contents('php://input'), $datos);
+                // echo '<pre>';print_r($datos);echo'</pre>';
+                
+
+
                 
                 $updateCourse = new CoursesController();
-                $updateCourse -> update(array_filter($arrayRoutes)[2]);
+                $updateCourse -> update(array_filter($arrayRoutes)[2], $datos);
             }
 
             // peticiones DELETE
